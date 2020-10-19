@@ -1,4 +1,3 @@
-// JavaScript source code
 const Ball = function (x, y, radius) {
 
     this.color = "rgb(" + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + ")";
@@ -38,6 +37,13 @@ Ball.prototype = {
     }
 };
 
+function getDistance(x1, y1, x2, y2) {
+    let xDistance = x2 - x1;
+    let yDistance = y2 - y1;
+
+    return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+}
+
 var context = document.querySelector("canvas").getContext("2d");
 
 var balls = new Array();
@@ -45,7 +51,7 @@ var balls = new Array();
 let x = document.documentElement.clientWidth * 0.5;
 let y = document.documentElement.clientHeight * 0.5;
 
-for (let index = 0; index < 50; index++) {
+for (let index = 0; index < 3; index++) {
     //balls.push(new Ball(x, y, 25));
     balls.push(new Ball(x, y, Math.floor(Math.random() * 10 + 20)));
 }
@@ -72,14 +78,18 @@ function loop() {
         //developer.mozilla.org/fr/docs/Web/API/CanvasRenderingContext2D/arc
         context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
         context.fill();
-
         ball.updatePosition(width, height);
 
-    }
+        let ball1 = balls[0];
+        let ball2 = balls[1];
 
-    //context.fillStyle = "#008000";
-    //canvas.fillRect(x, y, largeur, hauteur);
-    //context.fillRect(0, 0, 100, 100);
+        setTimeout(function () {
+            if (getDistance(ball1.x, ball1.y, ball2.x, ball2.y) < ball1.radius + ball2.radius) {
+                ball1.color = 'black';
+                ball2.color = 'black';
+            }
+        }, 3000);
+    }
 };
 
 loop();
