@@ -77,14 +77,6 @@ function loop() {
 
     }
 
-    context.fillStyle = ball.color;
-    //developer.mozilla.org/fr/docs/Web/API/CanvasRenderingContext2D/beginPath
-    context.beginPath();
-    //developer.mozilla.org/fr/docs/Web/API/CanvasRenderingContext2D/arc
-    context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-    context.fill();
-
-
     //context.fillStyle = "#008000";
     //canvas.fillRect(x, y, largeur, hauteur);
     //context.fillRect(0, 0, 100, 100);
