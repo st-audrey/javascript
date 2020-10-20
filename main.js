@@ -51,7 +51,7 @@ var balls = new Array();
 let x = document.documentElement.clientWidth * 0.5;
 let y = document.documentElement.clientHeight * 0.5;
 
-for (let index = 0; index < 3; index++) {
+for (let index = 0; index < 4; index++) {
     //balls.push(new Ball(x, y, 25));
     balls.push(new Ball(x, y, Math.floor(Math.random() * 10 + 20)));
 }
@@ -70,8 +70,8 @@ function loop() {
     context.canvas.height = height;
     context.canvas.width = width;
 
-    for (let index = 0; index < balls.length - 1; index++) {
-        let ball = balls[index];
+    for (let i = 0; i < balls.length; i++) {
+        let ball = balls[i];
         context.fillStyle = ball.color;
         //developer.mozilla.org/fr/docs/Web/API/CanvasRenderingContext2D/beginPath
         context.beginPath();
@@ -80,15 +80,19 @@ function loop() {
         context.fill();
         ball.updatePosition(width, height);
 
-        let ball1 = balls[0];
-        let ball2 = balls[1];
-
         setTimeout(function () {
-            if (getDistance(ball1.x, ball1.y, ball2.x, ball2.y) < ball1.radius + ball2.radius) {
-                ball1.color = 'black';
-                ball2.color = 'black';
+            for (let i = 0; i < balls.length; i++) {
+                for (let j = i + 1; j < balls.length; j++) {
+                    if (getDistance(balls[i].x, balls[i].y, balls[j].x, balls[j].y) <= balls[i].radius + balls[j].radius) {
+                        balls[i].color = 'black';
+                        balls[j].color = 'black';
+
+                        //ball1.direction = Math.random() * Math.PI * 2;
+                        //ball2.direction = Math.random() * Math.PI * 2;
+                    }
+                }
             }
-        }, 3000);
+        }, 3000); 
     }
 };
 
